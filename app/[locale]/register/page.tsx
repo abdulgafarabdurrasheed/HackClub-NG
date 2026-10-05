@@ -5,14 +5,6 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { submitClubApplication } from "./actions";
 
-const NIGERIAN_STATES = [
-  "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", 
-  "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe", 
-  "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", 
-  "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", 
-  "Taraba", "Yobe", "Zamfara"
-];
-
 export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -45,7 +37,7 @@ export default function RegisterPage() {
               Register your <span className="text-[#ec3750]">Hack Club</span>
             </h1>
             <p className="text-lg text-zinc-400">
-              Already officially approved by Hack Club HQ? Add your club to the Nigerian directory so students can find you.
+              Already officially approved by Hack Club HQ? Add your club to the Nigerian map so local students can find you.
             </p>
           </div>
 
@@ -71,7 +63,7 @@ export default function RegisterPage() {
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div className="sm:col-span-2">
                   <label htmlFor="clubName" className="block text-sm font-medium text-zinc-300 mb-1">Club Name</label>
-                  <input type="text" name="clubName" id="clubName" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-[#ec3750] focus:border-transparent transition-all" placeholder="e.g. Yaba Tech Hack Club" />
+                  <input type="text" name="clubName" id="clubName" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-[#ec3750] transition-all" placeholder="e.g. Yaba Tech Hack Club" />
                 </div>
 
                 <div>
@@ -87,17 +79,10 @@ export default function RegisterPage() {
                   </select>
                 </div>
 
-                <div>
-                  <label htmlFor="state" className="block text-sm font-medium text-zinc-300 mb-1">State</label>
-                  <select name="state" id="state" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-[#ec3750] transition-all appearance-none">
-                    <option value="">Select a state...</option>
-                    {NIGERIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                </div>
-
-                <div>
-                  <label htmlFor="city" className="block text-sm font-medium text-zinc-300 mb-1">City / Town</label>
-                  <input type="text" name="city" id="city" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-[#ec3750] transition-all" />
+                <div className="sm:col-span-2">
+                  <label htmlFor="address" className="block text-sm font-medium text-zinc-300 mb-1">Exact Address (For Map Search)</label>
+                  <input type="text" name="address" id="address" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-[#ec3750] transition-all" placeholder="e.g. 12 Herbert Macaulay Way, Yaba, Lagos" />
+                  <p className="text-xs text-zinc-500 mt-1">We use this to calculate distance so students can find the club nearest to them.</p>
                 </div>
 
                 <div className="sm:col-span-2">
