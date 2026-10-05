@@ -5,6 +5,8 @@ const HackClubProvider = {
   id: "hackclub",
   name: "Hack Club",
   type: "oauth" as const,
+  issuer: "https://auth.hackclub.com",
+  idToken: true,
   clientId: process.env.HACKCLUB_CLIENT_ID || "mock-client-id",
   clientSecret: process.env.HACKCLUB_CLIENT_SECRET || "mock-secret",
   authorization: "https://auth.hackclub.com/oauth/authorize?scope=openid+email+name+profile+verification_status+slack_id",
