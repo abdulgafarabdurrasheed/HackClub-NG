@@ -21,12 +21,12 @@ export type SearchResult = {
   distanceKm: number;
 };
 
-export async function searchNearestClubs(query: string) {
+export async function searchNearestClubs(query: string, exactLat?: number, exactLng?: number) {
   if (!query) return { success: false, error: "Empty query" };
 
   try {
-    // 1. Geocode the user's search query
-    const userCoords = await geocodeAddress(query);
+    // 1. Geocode or use exact coords
+    const userCoords = (exactLat && exactLng) ? { lat: exactLat, lng: exactLng } : await geocodeAddress(query);
     if (!userCoords) {
       return { success: false, error: "Could not locate that address." };
     }

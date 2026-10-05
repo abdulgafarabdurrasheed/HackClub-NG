@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { LocationAutocomplete } from "@/components/LocationAutocomplete";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { searchNearestClubs, SearchResult, joinClubAction } from "./actions";
@@ -12,6 +13,7 @@ export default function DirectorySearchPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCoords, setSelectedCoords] = useState<{lat: number, lng: number} | null>(null);
 
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -22,7 +24,7 @@ export default function DirectorySearchPage() {
     setHasSearched(false);
     setError(null);
 
-    const res = await searchNearestClubs(searchQuery);
+    const res = await searchNearestClubs(searchQuery, selectedCoords?.lat, selectedCoords?.lng);
     
     setIsSearching(false);
     setHasSearched(true);
@@ -118,9 +120,7 @@ export default function DirectorySearchPage() {
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                           {club.meetingInfo}
                         </div>
-                        <button className="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-2.5 px-4 rounded-lg transition-colors border border-zinc-700">
-                          Join Club
-                        </button>
+                        <Link href={`/en/club/${club.id}`} className="w-full text-center block bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-2.5 px-4 rounded-lg transition-colors border border-zinc-700">View Details</Link>
                       </div>
                     </div>
                   ))}

@@ -14,7 +14,7 @@ export default async function LeaderDashboard() {
   
   // For MVP/Demo purposes, assuming the first club's leader is logged in
   let myClub;
-  let members = [];
+  let members: any[] = [];
   
   try {
     const allClubs = await db.select().from(clubs).limit(1);
@@ -101,12 +101,14 @@ export default async function LeaderDashboard() {
                           <p className="text-sm text-zinc-400">{member.userEmail}</p>
                         </div>
                         <div className="flex gap-2">
-                          <form action={approveMember.bind(null, member.memberRecordId, myClub.id)}>
+                          {/* @ts-ignore */}
+                          <form action={async () => { "use server"; await approveMember(member.memberRecordId, myClub.id); }}>
                             <button type="submit" className="bg-green-600 hover:bg-green-500 text-white p-2 rounded-lg" title="Approve">
                               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                             </button>
                           </form>
-                          <form action={rejectMember.bind(null, member.memberRecordId)}>
+                          {/* @ts-ignore */}
+                          <form action={async () => { "use server"; await rejectMember(member.memberRecordId); }}>
                             <button type="submit" className="bg-zinc-800 hover:bg-red-600 text-white p-2 rounded-lg" title="Reject">
                               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>

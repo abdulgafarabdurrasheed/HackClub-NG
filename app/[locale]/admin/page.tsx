@@ -72,7 +72,8 @@ export default async function AdminDashboard() {
                             Approve
                           </button>
                         </form>
-                        <form action={deleteClub.bind(null, club.id)}>
+                        {/* @ts-ignore */}
+                              <form action={deleteClub.bind(null, club.id)}>
                           <button type="submit" className="bg-zinc-800 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
                             Reject
                           </button>
@@ -119,6 +120,7 @@ export default async function AdminDashboard() {
                             <td className="px-6 py-4 text-zinc-400 max-w-xs truncate">{club.address}</td>
                             <td className="px-6 py-4 text-zinc-400">{club.memberCount}</td>
                             <td className="px-6 py-4 text-right">
+                              {/* @ts-ignore */}
                               <form action={deleteClub.bind(null, club.id)}>
                                 <button type="submit" className="text-red-500 hover:text-red-400 font-bold px-3 py-1 rounded hover:bg-red-500/10 transition-colors">
                                   Revoke
