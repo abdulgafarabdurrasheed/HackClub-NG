@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, uuid, integer, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, uuid, integer, pgEnum, real } from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum("role", ["member", "club_leader", "state_admin", "super_admin"]);
 export const memberStatusEnum = pgEnum("member_status", ["pending", "approved"]);
@@ -21,6 +21,9 @@ export const clubs = pgTable("clubs", {
   schoolType: schoolTypeEnum("school_type").notNull(),
   state: text("state").notNull(),
   city: text("city").notNull(),
+  address: text("address"),
+  latitude: real("latitude"),
+  longitude: real("longitude"),
   bio: text("bio"),
   meetingInfo: text("meeting_info"),
   memberCount: integer("member_count").default(0),
