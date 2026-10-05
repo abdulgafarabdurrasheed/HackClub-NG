@@ -421,12 +421,12 @@
     }
   },
   "Clubs": {
-    "metaTitle": "Hack Clubs",
-    "metaDescription": "A place for high school hackers to build together!",
-    "heroEyebrow": "Hack Club presents",
-    "heroTitle": "Your school's <accent>most interesting</accent> room!",
-    "heroCopy": "A worldwide network of high school coding clubs. Make cool things, find people who share your interests, and get help from a community of hackers!",
-    "startClub": "Start a club",
+    "metaTitle": "Hack Club Nigeria 🇳🇬",
+    "metaDescription": "The central hub for high school and university hackers across Nigeria!",
+    "heroEyebrow": "Hack Club Nigeria 🇳🇬",
+    "heroTitle": "Nigeria's <accent>most interesting</accent> coding community!",
+    "heroCopy": "A nationwide network of high school and university coding clubs. Make cool things, find people who share your interests, and get help from a community of hackers across Nigeria!",
+    "startClub": "Register your club",
     "signIn": "Sign in",
     "learnMore": "Learn more",
     "memberSignIn": "Club member? <link>Sign in with email</link>",
