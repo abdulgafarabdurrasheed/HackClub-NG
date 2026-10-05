@@ -179,6 +179,12 @@ export default async function ClubPage({ params }: Props) {
               >
                 {t("startClub")} <Arrow />
               </a>
+              <Link
+                className={`${styles["clubs-button"]} ${styles["clubs-button-white"]} cta-btn`}
+                href="/register"
+              >
+                Add to Directory <Arrow />
+              </Link>
               <a
                 className={`${styles["clubs-button"]} ${styles["clubs-button-outline"]} cta-btn`}
                 href="https://clubs.hackclub.com/auth/"
