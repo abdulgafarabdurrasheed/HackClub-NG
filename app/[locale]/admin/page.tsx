@@ -107,6 +107,7 @@ export default async function AdminDashboard() {
                           <th className="px-6 py-4 font-medium">Club Name</th>
                           <th className="px-6 py-4 font-medium">School</th>
                           <th className="px-6 py-4 font-medium">Address</th>
+                          <th className="px-6 py-4 font-medium">Members</th>
                           <th className="px-6 py-4 font-medium text-right">Action</th>
                         </tr>
                       </thead>
@@ -116,6 +117,7 @@ export default async function AdminDashboard() {
                             <td className="px-6 py-4 font-bold text-white">{club.name}</td>
                             <td className="px-6 py-4 text-zinc-400">{club.schoolName}</td>
                             <td className="px-6 py-4 text-zinc-400 max-w-xs truncate">{club.address}</td>
+                            <td className="px-6 py-4 text-zinc-400">{club.memberCount}</td>
                             <td className="px-6 py-4 text-right">
                               <form action={deleteClub.bind(null, club.id)}>
                                 <button type="submit" className="text-red-500 hover:text-red-400 font-bold px-3 py-1 rounded hover:bg-red-500/10 transition-colors">
