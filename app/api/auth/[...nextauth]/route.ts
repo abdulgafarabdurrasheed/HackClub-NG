@@ -11,10 +11,11 @@ const HackClubProvider = {
   token: "https://auth.hackclub.com/oauth/token",
   userinfo: "https://auth.hackclub.com/oauth/userinfo",
   profile(profile: any) {
+    console.log("Hack Club Auth Profile Payload:", profile);
     return {
-      id: profile.id,
-      name: profile.name,
-      email: profile.email,
+      id: profile.slack_id || profile.id || profile.email || String(Math.random()),
+      name: profile.name || profile.username || "Hack Club Member",
+      email: profile.email || "unknown@hackclub.com",
     };
   },
 };
