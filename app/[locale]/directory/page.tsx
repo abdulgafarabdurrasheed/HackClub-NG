@@ -60,7 +60,7 @@ export default function DirectorySearchPage() {
               <p className="text-sm text-zinc-400 mb-4 max-w-sm">
                 Start a Hack Club at your own school to help teens near you learn to code. We provide the curriculum, the community, and the perks.
               </p>
-              <a href="/register" className="inline-block w-full text-center bg-white text-black font-bold py-2 px-4 rounded-lg hover:bg-zinc-200 transition-colors">
+              <a href="/how-to-start" className="inline-block w-full text-center bg-white text-black font-bold py-2 px-4 rounded-lg hover:bg-zinc-200 transition-colors">
                 Start a club at your school
               </a>
             </div>
