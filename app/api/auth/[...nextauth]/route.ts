@@ -5,17 +5,16 @@ const HackClubProvider = {
   id: "hackclub",
   name: "Hack Club",
   type: "oauth" as const,
-  issuer: "https://auth.hackclub.com",
-  idToken: true,
+  wellKnown: "https://auth.hackclub.com/.well-known/openid-configuration",
   clientId: process.env.HACKCLUB_CLIENT_ID || "mock-client-id",
   clientSecret: process.env.HACKCLUB_CLIENT_SECRET || "mock-secret",
-  authorization: "https://auth.hackclub.com/oauth/authorize?scope=openid+email+name+profile+verification_status+slack_id",
-  token: "https://auth.hackclub.com/oauth/token",
-  userinfo: "https://auth.hackclub.com/oauth/userinfo",
+  authorization: {
+    params: { scope: "openid email name profile verification_status slack_id" },
+  },
   profile(profile: any) {
     console.log("Hack Club Auth Profile Payload:", profile);
     return {
-      id: profile.slack_id || profile.id || profile.email || String(Math.random()),
+      id: profile.slack_id || profile.sub || profile.id || profile.email || String(Math.random()),
       name: profile.name || profile.username || "Hack Club Member",
       email: profile.email || "unknown@hackclub.com",
     };
