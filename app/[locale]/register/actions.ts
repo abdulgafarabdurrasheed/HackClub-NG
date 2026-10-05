@@ -12,6 +12,8 @@ export async function submitClubApplication(formData: FormData) {
     const address = formData.get("address") as string;
     const meetingInfo = formData.get("meetingInfo") as string;
     const bio = formData.get("bio") as string;
+    const publicEmail = formData.get("publicEmail") as string;
+    const clubFocus = formData.get("clubFocus") as "hardware" | "software" | "both" | "other";
 
     if (!clubName || !schoolName || !address) {
       return { success: false, error: "Missing required fields" };
@@ -34,6 +36,8 @@ export async function submitClubApplication(formData: FormData) {
       longitude: coords.lng,
       meetingInfo: meetingInfo,
       bio: bio,
+      publicEmail: publicEmail,
+      clubFocus: clubFocus || "software",
       isApproved: false, // Requires admin approval
     });
 

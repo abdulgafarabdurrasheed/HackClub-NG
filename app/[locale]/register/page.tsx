@@ -61,6 +61,20 @@ export default function RegisterPage() {
               )}
 
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div className="sm:col-span-1">
+                  <label htmlFor="publicEmail" className="block text-sm font-medium text-zinc-300 mb-1">Public Contact Email</label>
+                  <input type="email" name="publicEmail" id="publicEmail" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-[#ec3750] transition-all" placeholder="hello@yabahackclub.com" />
+                </div>
+
+                <div className="sm:col-span-1">
+                  <label htmlFor="clubFocus" className="block text-sm font-medium text-zinc-300 mb-1">Club Focus</label>
+                  <select name="clubFocus" id="clubFocus" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-[#ec3750] transition-all appearance-none">
+                    <option value="software">Software (Coding, Apps, Web)</option>
+                    <option value="hardware">Hardware (Sprig, Orpheus, Robotics)</option>
+                    <option value="both">Both (Software & Hardware)</option>
+                    <option value="other">Other / General Maker</option>
+                  </select>
+                </div>
                 <div className="sm:col-span-2">
                   <label htmlFor="clubName" className="block text-sm font-medium text-zinc-300 mb-1">Club Name</label>
                   <input type="text" name="clubName" id="clubName" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-[#ec3750] transition-all" placeholder="e.g. Yaba Tech Hack Club" />
