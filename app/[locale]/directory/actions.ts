@@ -1,5 +1,10 @@
 "use server";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { users, clubMembers } from "@/lib/db/schema";
+import { and } from "drizzle-orm";
+
 import { db } from "@/lib/db";
 import { clubs } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
@@ -60,5 +65,58 @@ export async function searchNearestClubs(query: string) {
   } catch (error) {
     console.error("Search failed:", error);
     return { success: false, error: "An error occurred during search." };
+  }
+}
+
+
+
+
+
+
+export async function joinClubAction(clubId: string) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user || !session.user.email) {
+      return { success: false, error: "You must be signed in to join a club." };
+    }
+
+    const userEmail = session.user.email;
+    const userName = session.user.name || "Student";
+
+    // Upsert User
+    let user = await db.select().from(users).where(eq(users.email, userEmail)).limit(1).then(res => res[0]);
+    if (!user) {
+      const inserted = await db.insert(users).values({
+        name: userName,
+        email: userEmail,
+        role: "member"
+      }).returning();
+      user = inserted[0];
+    }
+
+    // Check if already pending or approved
+    const existingMembership = await db.select().from(clubMembers)
+      .where(
+        and(
+          eq(clubMembers.userId, user.id),
+          eq(clubMembers.clubId, clubId)
+        )
+      ).limit(1).then(res => res[0]);
+
+    if (existingMembership) {
+      return { success: false, error: `You are already ${existingMembership.status} for this club.` };
+    }
+
+    // Insert into clubMembers
+    await db.insert(clubMembers).values({
+      userId: user.id,
+      clubId: clubId,
+      status: "pending"
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Join club failed:", error);
+    return { success: false, error: "An error occurred while joining the club." };
   }
 }

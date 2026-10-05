@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { searchNearestClubs, SearchResult } from "./actions";
+import { searchNearestClubs, SearchResult, joinClubAction } from "./actions";
 
 export default function DirectorySearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,6 +11,18 @@ export default function DirectorySearchPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [joiningId, setJoiningId] = useState<string | null>(null);
+
+  const handleJoin = async (clubId: string) => {
+    setJoiningId(clubId);
+    const res = await joinClubAction(clubId);
+    setJoiningId(null);
+    if (res.success) {
+      alert("Successfully applied to join! The club leader will review your request.");
+    } else {
+      alert(res.error || "Failed to join club. Make sure you are signed in.");
+    }
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
