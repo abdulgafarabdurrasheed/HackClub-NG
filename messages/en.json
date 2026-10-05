@@ -551,7 +551,8 @@
         "q": "What are the benefits of becoming a Hack Club?",
         "a": "Access to Hack Club's community, workshops, funding tools, hardware perks, and coins from shipped projects, redeemable in the <shop>clubs.hackclub.com</shop>! The only ongoing requirement: ship every 6 months, meet mainly in-person."
       }
-    }
+    },
+    "affiliationDisclaimer": "Note: This platform is affiliated with Hack Club HQ, acting as a regional chapter intended specifically to keep track of, manage, and support Hack Clubs across Nigeria."
   },
   "Jobs": {
     "metaTitle": "Jobs — Hack Club",

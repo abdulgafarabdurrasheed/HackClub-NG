@@ -170,6 +170,19 @@ export default async function ClubPage({ params }: Props) {
             <p className={styles["clubs-eyebrow"]}>{t("heroEyebrow")}</p>
             <h1>{t.rich("heroTitle", { accent: (chunks) => <span>{chunks}</span> })}</h1>
             <p className={styles["clubs-hero-copy"]}>{t("heroCopy")}</p>
+            <p style={{
+              maxWidth: "630px",
+              margin: "20px auto 0",
+              fontSize: "14px",
+              color: "var(--muted)",
+              backgroundColor: "var(--darker)",
+              padding: "12px 16px",
+              borderRadius: "8px",
+              border: "1px solid var(--sunken)",
+              lineHeight: "1.4"
+            }}>
+              {t("affiliationDisclaimer")}
+            </p>
             <div className={styles["clubs-actions"]}>
               <a
                 className={`${styles["clubs-button"]} ${styles["clubs-button-red"]} cta-btn`}
