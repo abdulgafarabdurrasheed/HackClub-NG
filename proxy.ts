@@ -1,3 +1,4 @@
+import { getToken } from "next-auth/jwt";
 import createMiddleware from "next-intl/middleware";
 import { type NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
@@ -58,8 +59,21 @@ function withNegotiationHeaders(response: NextResponse, request: NextRequest) {
   return response;
 }
 
-export default function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+
+  // NextAuth Protection
+  const isProtected = pathname.includes("/directory") || pathname.includes("/register") || pathname.includes("/admin") || pathname.includes("/dashboard");
+  
+  if (isProtected) {
+    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+    if (!token) {
+      const localeMatch = pathname.match(/^\/([a-z]{2})\//);
+      const locale = localeMatch ? localeMatch[1] : "en";
+      return NextResponse.redirect(new URL(`/${locale}/auth`, request.url));
+    }
+  }
+
   const negotiable =
     (request.method === "GET" || request.method === "HEAD") &&
     !isRscRequest(request) &&
