@@ -25,7 +25,7 @@ export const clubs = pgTable("clubs", {
   meetingInfo: text("meeting_info"),
   memberCount: integer("member_count").default(0),
   isApproved: boolean("is_approved").default(false).notNull(),
-  leaderId: uuid("leader_id").references(() => users.id).notNull(),
+  leaderId: uuid("leader_id").references(() => users.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
