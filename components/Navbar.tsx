@@ -142,13 +142,9 @@ export function Navbar({ invertColors = false }: { invertColors?: boolean }) {
   ];
 
   const links: Array<{ label: string; href?: string; dropdown?: Item[] }> = [
-    { label: t("about"), dropdown: about },
-    { label: t("programs"), href: "/programs" },
-    { label: t("clubs"), href: "/clubs" },
-    { label: t("hcb"), href: "/fiscal-sponsorship" },
-    { label: t("hackathons"), href: "https://hackathons.hackclub.com" },
-    { label: t("resources"), dropdown: resources },
-    { label: t("donate"), href: "/philanthropy" },
+    { label: "Home", href: "/" },
+    { label: "Directory", href: "/directory" },
+    { label: "Register Club", href: "/register" }
   ];
 
   useEffect(() => {
