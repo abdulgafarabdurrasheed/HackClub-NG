@@ -257,25 +257,14 @@ export function Footer() {
             lineHeight: 1.5,
           }}
         >
-          {t("copyright", { year })}{" "}
+          © {year} Hack Club Nigeria. Open source at{" "}
           <a
-            href="https://the.hackfoundation.org/"
+            href="https://github.com/hackclub/nigeria-hackclub-site"
             target="_blank"
             rel="noopener noreferrer"
             style={u}
           >
-            {t("hackFoundation")}
-          </a>
-          {t("nonprofit")}
-          {` ${t("commit", { sha })}`}
-          {t("openSourceAt")}{" "}
-          <a
-            href="https://github.com/hackclub/site"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={u}
-          >
-            hackclub/site
+            hackclub/nigeria-hackclub-site
           </a>
         </p>
         <ThemeToggle variant="footer" />
