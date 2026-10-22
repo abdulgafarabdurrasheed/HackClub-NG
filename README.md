@@ -1,53 +1,75 @@
-<p align="center"><img width="192" alt="Hack Club logo" src="https://assets.hackclub.com/flag-standalone.svg"></p>
-<h1 align="center">Hack Club's Site (v4)</h1>
+# Hack Club Nigeria outreach hub
 
-This codebase powers the Hack Club website, which is built with [Next.js](https://nextjs.org/). You can view it live at [hackclub.com](https://hackclub.com/)
+A Nigeria-focused guide and outreach workspace connected to [Hack Club Global](https://hackclub.com/). The public site helps teens, educators, families, and volunteers understand how to start and sustain a teen-led making community. The private workspace helps authorized organizers keep track of school conversations, recommendations, visits, blockers, and follow-ups.
 
-## Development
+This project is **not** a club directory, club approval system, or replacement for Hack Club HQ. Official club applications, eligibility, program rules, funding decisions, and approvals belong to Hack Club Global. Local status such as “onboarded” means the outreach team has recorded participation; it does not mean HQ approved a club.
 
-1. Clone the repository
+## Local development
 
-```sh
-git clone --depth 1 https://github.com/hackclub/site.git
-```
-
-> [!NOTE]
-> --depth 1 only gets the latest commit, if you need the full history (unlikely, ~562M), remove the --depth.
-
-2. Install the dependencies
+Requires Node.js 20.9 or later and npm.
 
 ```sh
-bun install
+npm install
+npm run dev
 ```
 
-3. Then, start the development server:
+The public guides and school recommendation form can be viewed without sign-in. The outreach workspace uses username/email and password accounts backed by PostgreSQL. New accounts stay pending until a database-backed super admin approves them; no Hack Club account is required.
+
+## Environment
+
+Create `.env.local` with server-side values:
+
+```dotenv
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=replace-with-a-long-random-secret
+DATABASE_URL=postgres://...
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+SITE_URL=http://localhost:3000
+RESEND_API_KEY=...
+OUTREACH_FROM_EMAIL=outreach@example.com
+```
+
+- `NEXTAUTH_SECRET` signs the local account sessions. Generate a long random value and keep it server-only.
+- `DATABASE_URL` should point to a PostgreSQL database. The app does not connect to a guessed local default when it is missing.
+- `RESEND_API_KEY` and `OUTREACH_FROM_EMAIL` are optional. Configure them with a verified sender to email account request, approval, and decline updates. Without them, users can still check their request status after signing in.
+- Set `NEXT_PUBLIC_SITE_URL` and `SITE_URL` to the deployed origin. Do not assume a Hack Club subdomain has been approved.
+
+## Database setup
+
+Run both additive SQL migrations in order. They create the outreach workspace and account approval fields without dropping legacy tables or erasing existing rows:
 
 ```sh
-bun dev
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f drizzle/0000_outreach_hub.sql
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f drizzle/0001_outreach_accounts.sql
 ```
 
-4. Run the tests with:
+### Set the first super admin
+
+Register your own account at `/account/register`. Then promote that account once in PostgreSQL, replacing the email with the one you registered:
+
+```sql
+UPDATE outreach_users
+SET role = 'super_admin',
+    approval_status = 'approved',
+    is_active = true,
+    reviewed_by = lower('admin@example.com'),
+    reviewed_at = now()
+WHERE email = lower('admin@example.com');
+```
+
+After that, super admins can approve or decline requests and manage volunteer/coordinator roles from **Team**. Super admin roles remain database-controlled. The public form stores school recommendations as private outreach leads. Avoid putting student names or sensitive information into internal notes.
+
+## Product areas
+
+- `/` — explain the Nigeria support effort and route people into useful next steps.
+- `/guides` — starting a club, first meetups, flexible curriculum, YSWS, low-resource access, school outreach, and sustainable organizing.
+- `/recommend-school` — private recommendations from students, teachers, parents, alumni, and community members.
+- `/account` — approved team-only overview, school pipeline, visit/activity history, recommendation inbox, and account approvals.
+
+## Checks
 
 ```sh
-bun test
+npm run typecheck
+npm run lint
+npm run build
 ```
-
-## For agents
-
-The site publishes a machine-readable surface alongside the HTML:
-
-| URL | What it is |
-| --- | --- |
-| `/llms.txt` | Index of every page, in the [llmstxt.org](https://llmstxt.org) format |
-| `/api/v1/docs` | Browsable reference for the Events API |
-| `/api/versioning` | Public API compatibility, deprecation, and removal policy |
-| `/openapi.json`, `/api/openapi.yaml` | OpenAPI 3.2 description of the Events API — the same document is served at `/api/v1/openapi.json` and `/api/v1/openapi.yaml` |
-| `/api/v1/events/rss` | RSS 2.0 feed of newly announced events |
-| `/sitemap.xml`, `/robots.txt` | Canonical URLs and crawl rules |
-| `<page>.md` | Markdown representation of any page (`/index.md` for the homepage) |
-
-Any page also answers `Accept: text/markdown` with Markdown from the same URL
-
-## Credits
-
-Tongyu ([@bucketfish](https://github.com/bucketfish)) made most of the design with help from Rowan ([@3kh0](https://github.com/3kh0)). This is also built with help and feedback from many other Hack Club members! You can join the fun by submitting a pull request!
